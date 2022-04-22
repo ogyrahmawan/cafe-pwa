@@ -1,0 +1,54 @@
+.feedHeader {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 100;
+  border: 1px solid whitesmoke;
+  padding: 15px 20px;
+}
+
+.profileHeader {
+  position: relative;
+  top: 0;
+  z-index: 100;
+}
+
+.feedHeader h2 {
+  font-size: 0.9rem;
+}
+
+.menu {
+  flex: 0.6 !important;
+  min-width: fit-content;
+  overflow-y: auto;
+  display: relative;
+  padding: 5px 10px;
+  max-width: 600px;
+  height: 100vh;
+  margin-left: 20px;
+}
+
+.menu::-webkit-scrollbar {
+  display: none;
+}
+
+.listMenu {
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+.menuCard {
+  margin: 10px 10px 10px 0px;
+  width: 125px;
+}
+.menuImage {
+  border-radius: 20px;
+  object-fit: cover;
+
+}
+@media only screen and (max-width: 600px) {
+  .listMenu {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+  }
+}

@@ -1,0 +1,45 @@
+.sidebar {
+  background-color: rgb(247, 247, 247);
+  min-width: 75px;
+  width: 75px;
+  padding: 0px 15px;
+  max-height: 1200px;
+  overflow-y: scroll;
+}
+
+@media only screen and (max-width: 600px) {
+  .sidebar {
+    max-height: 95vh;
+  }
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+
+.sidebarOption {
+  margin-top: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  /* width: 100px; */
+}
+
+.categoryContainer {
+  border-radius: 10px;
+  background-color: white;
+  padding: 10px;
+  height: 50px;
+  width: 50px;
+  margin: auto;
+}
+
+.sidebarOption h2 {
+  text-align: center;
+  font-weight: 800;
+  font-size: 10px;
+}
+
+.active {
+  color: var(--hover-color--);
+}
