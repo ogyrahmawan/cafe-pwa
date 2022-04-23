@@ -9,6 +9,8 @@ import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { useDispatch } from 'react-redux';
+import styles from '../menuDetail.module.css'
+import { Radio } from '@mui/material';
 
 const drawerBleeding = 10;
 
@@ -38,7 +40,6 @@ export default function SwipeableEdgeDrawer(props) {
       isVisible: 'hidden',
       optionName: '',
       open: false,
-      zIndex: -1,
     })
   }
   
@@ -51,7 +52,7 @@ export default function SwipeableEdgeDrawer(props) {
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(50% - ${drawerBleeding}px)`,
+            height: `calc(60% - ${drawerBleeding}px)`,
             overflow: props.isVisible,
           },
         }}
@@ -81,6 +82,38 @@ export default function SwipeableEdgeDrawer(props) {
         >
           <Puller />
           <Typography sx={{ p: 2, color: 'text.secondary' }}>{props.options.toUpperCase()}</Typography>
+          <div className={styles.optionContainer} >
+            {
+              props.list?.map(each => (
+                <div key={each.id} className={styles.optionItem}>
+                  <div style={{display: 'flex', alignItems: 'center'}}>
+                    <Radio 
+                      sx={{
+                        color: grey[800],
+                        '&.Mui-checked': {
+                          color: grey[600],
+                        },
+                      }}
+                      value={props.optionData.default} 
+                      checked={each.name === props.optionData.default ? true: false}
+                      onChange={() => {
+                        // update selected option by click state
+                        const obj = {...props.optionData}
+                        obj.default = each.name
+                        obj.price = each.price
+                        props.setSelectedOptions(obj)
+
+                        // update variant state
+                        props.updateVariantOption(obj)
+                      }}
+                    />
+                    <h5>{each.name}</h5>
+                  </div>
+                    <p>+{each.price}</p>
+                </div>
+              ))
+            }
+          </div>
         </StyledBox>
         <StyledBox
           sx={{

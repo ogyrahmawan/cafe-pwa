@@ -111,3 +111,27 @@
     font-weight: bold;
     padding: 20px;
 }
+
+.optionContainer {
+    margin-top: 15px;
+    bottom: 0;
+}
+
+.optionItem {
+    width: 100%;
+    border-bottom: 2px solid whitesmoke;
+    padding: 0px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: rgb(0, 41, 0);
+}
+.optionItem h5 {
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+.optionItem p {
+    /* font-size: 15px; */
+    margin-right: 20px;
+}

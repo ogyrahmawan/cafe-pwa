@@ -6,6 +6,7 @@ import styles from './menuDetail.module.css'
 import Image from "next/image";
 import { Add, Delete, FavoriteBorder, Remove } from "@mui/icons-material";
 import Drawer from './components/drawer';
+import { set } from "lodash";
 
 export default function MenuDetail () {
     const dispatch = useDispatch()
@@ -13,6 +14,7 @@ export default function MenuDetail () {
     const id = router.query.detail
     const [menuDetail, setMenuDetail] = useState({})
     const [variant, setVariant] = useState([]);
+    console.log(variant, 'isi variant');
     const [selectedVariant, setSelectedVariant] = useState({
         index: 0,
         name: 'iced',
@@ -31,8 +33,6 @@ export default function MenuDetail () {
         open: false,
         listOption: []
     })
-
-    console.log(optionDrawer, 'isi option drawer');
 
     useEffect(async () => {
         if (id) {
@@ -57,7 +57,7 @@ export default function MenuDetail () {
         } catch (error) {
           console.log(error);
         }
-      }
+    }
     
 
     function getOptions () {
@@ -79,7 +79,7 @@ export default function MenuDetail () {
                                 isVisible: 'visible',
                                 optionName: each.name,
                                 open: true,
-                                list: resp.data
+                                listOption: resp.data
                             })
                         }}
                     >
@@ -105,6 +105,16 @@ export default function MenuDetail () {
                 </>
               );
         }
+    }
+
+    function updateVariantOption (item) {
+        const obj = [...variant]
+        obj[selectedVariant.index].options[item.index] = {
+            name: item.name,
+            default:item.default,
+            price: item.price
+        }
+        setVariant(obj)
     }
 
     return (
@@ -198,7 +208,10 @@ export default function MenuDetail () {
                 open={optionDrawer.open}
                 options={optionDrawer.optionName}
                 setOptionDrawer={setOptionDrawer}
-                list={optionDrawer.list}
+                list={optionDrawer.listOption}
+                optionData={selectedOptions}
+                setSelectedOptions={setSelectedOptions}
+                updateVariantOption={updateVariantOption}
             />
         </div>
     )
