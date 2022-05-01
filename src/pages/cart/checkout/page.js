@@ -2,9 +2,20 @@ import { useSelector } from "react-redux";
 import StandardHeader from "../../../components/Header/StandardHeader";
 import style from './style.module.css'
 import Cart from "../page";
+import PaymentDrawer from "../../../components/PaymentDrawer/PaymentDrawer";
+import { useState } from "react";
 
 export default function CheckoutPage () {
     const cart = useSelector(staate => staate.global.cart);
+    const [optionDrawer, setOptionDrawer] = useState({
+        isVisible: 'hidden',
+        open: true,
+    })
+
+    const [paymentMethod, setPaymentMethod] = useState(null)
+    console.log(paymentMethod, 'isi payment method')
+
+
     function getTotalQuantity () {
         let quantity = 0
         cart.forEach(item => {
@@ -31,8 +42,20 @@ export default function CheckoutPage () {
                     </div>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <h4 style={{marginTop: 0}}>Total Pesanan kamu</h4>
-                        <p style={{marginTop: 0}}>{getTotalPrice()}</p>
+                        <p style={{marginTop: 0}}>Rp{getTotalPrice()}</p>
                     </div>
+                </div>
+                <div>
+                    <div style={{display: 'flex', justifyContent: 'space-between', padding: '0px'}}>
+                        <h4>Payment Method</h4>
+                        <p 
+                            onClick={() => {
+                            setOptionDrawer({
+                                isVisible: 'visible',
+                                open: true,
+                            })
+                        }}>{paymentMethod ? paymentMethod : 'Select Payment Method'}</p>
+                    </div>                
                 </div>
             </div>
             <div 
@@ -41,6 +64,12 @@ export default function CheckoutPage () {
             >
                 <h5>BAYAR</h5>
             </div>
+            <PaymentDrawer 
+                isVisible={optionDrawer.isVisible}
+                open={optionDrawer.open}
+                setOptionDrawer={setOptionDrawer}
+                setPaymentMethod={setPaymentMethod}
+            />
         </div>
     )
 }
