@@ -85,8 +85,23 @@ export default function SwipeableEdgeDrawer(props) {
           <div className={styles.optionContainer} >
             {
               props.list?.map(each => (
-                <div key={each.id} className={styles.optionItem}>
-                  <div style={{display: 'flex', alignItems: 'center'}}>
+                <div key={each.id} 
+                  className={styles.optionItem}
+                  onClick={() => {
+                    // update selected option by click state
+                    const obj = {...props.optionData}
+                    obj.default = each.name
+                    obj.price = each.price
+                    props.setSelectedOptions(obj)
+
+                    // update variant state
+                    props.updateVariantOption(obj)
+                  }}  
+                >
+                  <div
+                    style={{display: 'flex', alignItems: 'center'}}
+   
+                  >
                     <Radio 
                       sx={{
                         color: grey[800],

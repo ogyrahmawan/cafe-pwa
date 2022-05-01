@@ -5,12 +5,15 @@
   z-index: 100;
   border: 1px solid whitesmoke;
   padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.shoppingCart {
+  position: relative;
 }
 
-.profileHeader {
-  position: relative;
-  top: 0;
-  z-index: 100;
+.shoppingCart span {
+  position: absolute;;
 }
 
 .feedHeader h2 {

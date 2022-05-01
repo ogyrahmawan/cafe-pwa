@@ -1,20 +1,23 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchListOptions, getMenuDetail } from './service';
 import styles from './menuDetail.module.css'
 import Image from "next/image";
 import { Add, Delete, FavoriteBorder, Remove } from "@mui/icons-material";
 import Drawer from './components/drawer';
-import { set } from "lodash";
+import { setCart } from "../../../redux/actions/global";
+import QuantityController from "../../../components/QuantityController/page";
+import { isEqual } from "lodash";
 
 export default function MenuDetail () {
     const dispatch = useDispatch()
     const router = useRouter();
+    const cart = useSelector(state => state.global.cart)
+    const editedCart = useSelector(state => state.global.editedCart)
     const id = router.query.detail
     const [menuDetail, setMenuDetail] = useState({})
     const [variant, setVariant] = useState([]);
-    console.log(variant, 'isi variant');
     const [selectedVariant, setSelectedVariant] = useState({
         index: 0,
         name: 'iced',
@@ -40,6 +43,25 @@ export default function MenuDetail () {
         }
     }, [id])
 
+    useEffect(async () => {
+        if (editedCart) {
+            setQuantity(editedCart.quantity)
+            const indexVariant = variant.findIndex(el => el.id_variant === editedCart.id_variant)
+            if(indexVariant !== -1) {
+                const variantPayload = {
+                    index: indexVariant,
+                    name: variant[indexVariant].variant_name
+                }
+                setSelectedVariant(variantPayload)
+                const image = variant[indexVariant].image_url
+                setImage(image)
+            }
+            // const variantClone = [...variant]
+            // variantClone[indexVariant].options = editedCart.options
+            // setVariant(variantClone)
+        }
+    }, [editedCart])
+
     async function getMenuDetailDispatch () {
         try {
             const resp = await dispatch(getMenuDetail(id))
@@ -62,7 +84,6 @@ export default function MenuDetail () {
 
     function getOptions () {
         const options = variant[selectedVariant.index].options
-        // setOptions(options);
         return <>
             {
                 options.map((each, i) => (
@@ -117,6 +138,56 @@ export default function MenuDetail () {
         setVariant(obj)
     }
 
+    function getTotalPrice () {
+        if (variant.length > 0) {
+            const variantOptions = variant[selectedVariant.index].options
+            let totalPrice = menuDetail.price
+            variantOptions.forEach(el => {
+                totalPrice += el.price
+            })
+            return totalPrice
+        } else {
+            return 0
+        }
+    }
+
+    function addToCart () {
+        const newItem = {
+            id_menu: menuDetail.id,
+            menu_name: menuDetail.name,
+            id_variant: variant[selectedVariant.index].id_variant,
+            variants: variant,
+            variant_name: variant[selectedVariant.index].variant_name,
+            options: variant[selectedVariant.index].options,
+            item_price: getTotalPrice(),
+            totalPrice: getTotalPrice() * quantity,
+            image_url: variant[selectedVariant.index].image_url,
+            quantity: quantity,
+            selectedVariant: variant[selectedVariant.index],
+            menuDetail: menuDetail
+        }
+        const existCart = [...cart]
+        let isExistItem = false 
+        let indexOfExistItem
+        existCart.forEach((el, index) => {
+            let isIdentic = isEqual(el.options, newItem.options)
+            if(isIdentic && el.id_menu === newItem.id_menu && el.id_variant == newItem.id_variant) {
+                isExistItem = true
+                indexOfExistItem = index
+            }
+        })
+
+        if(isExistItem) {
+            existCart[indexOfExistItem].quantity += 1
+            existCart[indexOfExistItem].totalPrice = existCart[indexOfExistItem].quantity * newItem.item_price
+            dispatch(setCart(existCart));
+        } else {
+            const newData = [...cart, newItem]
+            dispatch(setCart(newData));
+        }
+        
+    }
+
     return (
         <div className={styles.menuDetailContainer}>
             <div className={styles.menuDetailHeader}>
@@ -169,38 +240,17 @@ export default function MenuDetail () {
                 }
             </div>
             <div className={styles.containerQuantity}>
-                <div 
-                    className={styles.quantityButton}
-                    onClick={() => {
-                        if ((quantity-1) >= 1) {
-                            const newQuantity = quantity-1
-                            setQuantity(newQuantity);
-                        }
-                    }}
-                >
-                    {
-                        quantity <= 1 ?
-                        <Delete />
-                        :
-                        <Remove />
-                    }
-                </div>
-                <div className={styles.quantityButton} id={styles.quantity}>
-                    <p>{quantity}</p>
-                </div>
-                <div 
-                    className={styles.quantityButton}
-                    onClick={() => {
-                        const newQuantity = quantity + 1
-                        setQuantity(newQuantity);
-                    }}
-                >
-                    <Add />
-                </div>
+                < QuantityController 
+                    quantity={quantity}
+                    setQuantity={setQuantity}
+                />
             </div>
             <div className={styles.orderContainer}>
-                <div id={styles.addToCart}>
-                    Add to cart - {quantity * menuDetail.price}
+                <div 
+                    id={styles.addToCart}
+                    onClick={()=> addToCart()}
+                >
+                    Add to cart - {getTotalPrice() * quantity}
                 </div>
             </div>
             <Drawer

@@ -21,7 +21,7 @@ a {
 }
 body {
   font-size: 14px;
-  --hover-color--: #50b7f5;
+  --green-color--: rgb(0, 41, 0);;
   --hover-background: rgba(80, 182, 245, 0.234)
 }
 

@@ -11,3 +11,17 @@ export const setCategories = (payload) => {
         payload,
     }
 }
+
+export const setCart = (payload) => {
+    return {
+        type: 'SETCART',
+        payload
+    }
+}
+
+export const setEditedCart = (payload) => {
+    return {
+        type: 'SETEDITEDCART',
+        payload
+    }
+}
