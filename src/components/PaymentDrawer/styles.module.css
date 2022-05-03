@@ -1,5 +1,8 @@
 .optionContainer {
+    margin-top: 80px;
     padding: 20px;
+    position: relative;
+    height: 400px !important;
 }
 
 .itemContainer {
@@ -15,10 +18,13 @@
 .itemContainer p {
     font-size: large;
 }
-
 .cashierIcon {
+    margin-right: 20px;
+}
+
+.itemContainer input {
     position: absolute;
-    left: 30px;
+    right: 30px;
 }
 
 .itemContainerEwallet {
@@ -32,6 +38,32 @@
     width: 45%;
 }
 
+
 .itemContainerEwallet p {
     font-size: large;
+}
+
+.greenButton {
+    padding: 0px 20px;
+    position: absolute;
+    background-color: var(--green-color--);
+    width: 100%;
+    top: 0;
+    left: 0;
+    margin-bottom: 50px;
+    color: white;
+    text-align: left;
+    font-size: 20px;
+    border-radius: 8px 8px 0px 0px;
+  }
+
+#checkoutButton {
+    position: absolute;
+    background-color: var(--green-color--);
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    color: white;
+    text-align: center;
+    font-size: 20px;
 }

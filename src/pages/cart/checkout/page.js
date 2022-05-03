@@ -13,7 +13,6 @@ export default function CheckoutPage () {
     })
 
     const [paymentMethod, setPaymentMethod] = useState(null)
-    console.log(paymentMethod, 'isi payment method')
 
 
     function getTotalQuantity () {
@@ -45,30 +44,14 @@ export default function CheckoutPage () {
                         <p style={{marginTop: 0}}>Rp{getTotalPrice()}</p>
                     </div>
                 </div>
-                <div>
-                    <div style={{display: 'flex', justifyContent: 'space-between', padding: '0px'}}>
-                        <h4>Payment Method</h4>
-                        <p 
-                            onClick={() => {
-                            setOptionDrawer({
-                                isVisible: 'visible',
-                                open: true,
-                            })
-                        }}>{paymentMethod ? paymentMethod : 'Select Payment Method'}</p>
-                    </div>                
-                </div>
             </div>
-            <div 
-                id={style.checkoutButton}
-                onClick={() => router.push('/cart/checkout')}
-            >
-                <h5>BAYAR</h5>
-            </div>
+
             <PaymentDrawer 
                 isVisible={optionDrawer.isVisible}
                 open={optionDrawer.open}
                 setOptionDrawer={setOptionDrawer}
                 setPaymentMethod={setPaymentMethod}
+                paymentMethod={paymentMethod}
             />
         </div>
     )

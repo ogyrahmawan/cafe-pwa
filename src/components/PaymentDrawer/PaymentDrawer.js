@@ -13,7 +13,7 @@ import styles from './styles.module.css'
 import { Radio } from '@mui/material';
 import { PointOfSale } from '@mui/icons-material';
 
-const drawerBleeding = 10;
+const drawerBleeding = 65;
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
@@ -33,7 +33,10 @@ export default function SwipeableEdgeDrawer(props) {
   const dispatch = useDispatch()
   const { window } = props;
 
+  const [open, setOpen] = React.useState(false);
+
   const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
   };
 
   const closeDrawer = () => () => {
@@ -48,23 +51,23 @@ export default function SwipeableEdgeDrawer(props) {
 
   return (
     <>
-      <CssBaseline />
+    <CssBaseline />
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(60% - ${drawerBleeding}px)`,
-            overflow: props.isVisible,
+            height: '400px',
+            overflow: 'visible',
           },
         }}
       />
       <SwipeableDrawer
         container={container}
         anchor="bottom"
-        open={props.open}
-        onClose={closeDrawer()}
+        open={open}
+        onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
         swipeAreaWidth={drawerBleeding}
-        disableSwipeToOpen={true}
+        disableSwipeToOpen={false}
         ModalProps={{
           keepMounted: true,
         }}
@@ -72,25 +75,32 @@ export default function SwipeableEdgeDrawer(props) {
         <StyledBox
           sx={{
             position: 'absolute',
-            top: -drawerBleeding,
+            top: -75,
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
             visibility: 'visible',
-            right: 0,
+            right: -1,
             left: 0,
           }}
         >
-          <Puller />
+          <div 
+            className={styles.greenButton}
+          >
+            <Puller />
+            <h5>Choose Payment</h5>
+          </div>
           <div className={styles.optionContainer} >
-            <h3>Choose Payment</h3>
             <div 
                 className={styles.itemContainer}
                 onClick={() => {
                     props.setPaymentMethod('Cash')
                 }}
             >
-                <PointOfSale className={styles.cashierIcon}/>
-                <p >Cash</p>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                  <PointOfSale className={styles.cashierIcon}/>
+                  <p >Cash</p>
+                </div>
+                <input type="radio" checked={props.paymentMethod === 'Cash'} />
             </div>
             <h5>E-Wallet</h5>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -98,6 +108,8 @@ export default function SwipeableEdgeDrawer(props) {
                     props.setPaymentMethod('Gopay')
                 }} className={styles.itemContainerEwallet}>
                     <p >Gopay</p>
+                    <input type="radio" checked={props.paymentMethod === 'Gopay'} />
+
                 </div>
                 <div 
                     className={styles.itemContainerEwallet}
@@ -106,9 +118,25 @@ export default function SwipeableEdgeDrawer(props) {
                     }}
                 >
                     <p >Shopeepay</p>
+                    <input type="radio" checked={props.paymentMethod === 'Shopeepay'} />
                 </div>
             </div>
+            <div 
+              id={styles.checkoutButton}
+              onClick={() => router.push('/cart/checkout')}
+            >
+              <h5>BAYAR</h5>
+            </div>
           </div>
+        </StyledBox>
+        <StyledBox
+          sx={{
+            px: 2,
+            pb: 2,
+            height: '100%',
+            overflow: 'auto',
+          }}
+        >
         </StyledBox>
       </SwipeableDrawer>
     </>
