@@ -1,11 +1,13 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StandardHeader from "../../../components/Header/StandardHeader";
 import style from './style.module.css'
 import Cart from "../page";
 import PaymentDrawer from "../../../components/PaymentDrawer/PaymentDrawer";
 import { useState } from "react";
+import { checkout } from "./service";
 
 export default function CheckoutPage () {
+    const dispatch = useDispatch()
     const cart = useSelector(staate => staate.global.cart);
     const [optionDrawer, setOptionDrawer] = useState({
         isVisible: 'hidden',
@@ -30,6 +32,43 @@ export default function CheckoutPage () {
         })
         return totalPrice
     }
+
+    async function pay () {
+        const menus = cart.map(el => {
+            const notes = getOptionString(el.options);
+            const payload = {
+                id_menu: el.id_menu,
+                quantity: el.quantity,
+                line_amount: el.totalPrice,
+                note: notes,
+            }
+            return payload;
+        })
+        const payload = {
+            total_price: getTotalPrice(),
+            order_type: 'DINE IN',
+            payment_method: paymentMethod,
+            menus,
+        }
+        try {
+            const resp = await dispatch(checkout(payload))
+            console.log(resp, 'isi resp')
+        } catch (error) {
+            console.log(error, 'isi error')
+        }
+    }
+
+    function getOptionString (data) {
+        let string = ''
+        data.forEach((el, index) => {
+            if (index != data.length - 1) {
+                string += `${el.default},` 
+            } else {
+                string += `${el.default}`
+            }
+        })
+        return string
+    }
     return (
         <div className={style.container}>
             <StandardHeader name={'Konfirmasi Pesanan'}/>
@@ -52,6 +91,7 @@ export default function CheckoutPage () {
                 setOptionDrawer={setOptionDrawer}
                 setPaymentMethod={setPaymentMethod}
                 paymentMethod={paymentMethod}
+                pay={pay}
             />
         </div>
     )

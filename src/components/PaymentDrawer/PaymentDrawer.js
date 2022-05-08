@@ -98,32 +98,32 @@ export default function SwipeableEdgeDrawer(props) {
             >
                 <div style={{display: 'flex', alignItems: 'center'}}>
                   <PointOfSale className={styles.cashierIcon}/>
-                  <p >Cash</p>
+                  <p >CASH</p>
                 </div>
-                <input type="radio" checked={props.paymentMethod === 'Cash'} />
+                <input type="radio" checked={props.paymentMethod === 'CASH'} />
             </div>
             <h5>E-Wallet</h5>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <div onClick={() => {
-                    props.setPaymentMethod('Gopay')
+                    props.setPaymentMethod('GOPAY')
                 }} className={styles.itemContainerEwallet}>
-                    <p >Gopay</p>
-                    <input type="radio" checked={props.paymentMethod === 'Gopay'} />
+                    <p >GOPAY</p>
+                    <input type="radio" checked={props.paymentMethod === 'GOPAY'} />
 
                 </div>
                 <div 
                     className={styles.itemContainerEwallet}
                     onClick={() => {
-                        props.setPaymentMethod('Shopeepay')
+                        props.setPaymentMethod('SHOPEEPAY')
                     }}
                 >
-                    <p >Shopeepay</p>
-                    <input type="radio" checked={props.paymentMethod === 'Shopeepay'} />
+                    <p >SHOPEEPAY</p>
+                    <input type="radio" checked={props.paymentMethod === 'SHOPEEPAY'} />
                 </div>
             </div>
             <div 
               id={styles.checkoutButton}
-              onClick={() => router.push('/cart/checkout')}
+              onClick={() => props.pay()}
             >
               <h5>BAYAR</h5>
             </div>
