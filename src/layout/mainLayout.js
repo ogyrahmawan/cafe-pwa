@@ -6,7 +6,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
 import { useRef } from 'react';
-import { HomeMaxRounded, MenuBookRounded } from '@mui/icons-material';
+import { AccessTimeFilledRounded, HomeMaxRounded, MenuBookRounded } from '@mui/icons-material';
 
 export default function MainLayout ({children}) {
     const ref = useRef()
@@ -28,6 +28,11 @@ export default function MainLayout ({children}) {
                         <BottomNavigationAction 
                             label="Menus" 
                             icon={<MenuBookRounded  />}
+                            onClick={() => router.push('/')} 
+                        />
+                        <BottomNavigationAction 
+                            label="History" 
+                            icon={<AccessTimeFilledRounded  />}
                             onClick={() => router.push('/')} 
                         />
                     </BottomNavigation>
