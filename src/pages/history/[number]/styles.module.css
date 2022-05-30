@@ -1,0 +1,67 @@
+.container {
+    width: 100%;
+    min-width: fit-content;
+    overflow-y: auto;
+}
+.detailTransactionBody {
+    padding: 20px;
+    max-height: 80%;
+    overflow-y: scroll;
+
+    position: relative;
+}
+
+.detailTransactionHeader {
+    display: flex;
+    justify-content: center;
+}
+
+.detailTransactionHeader {
+    text-align: center;
+    color: var(--green-color--);
+}
+
+.marginZero {
+    margin: 0
+}
+
+.linesBreak {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: -20px;
+    height: 5px;
+    width: 100%;
+    background-color: var(--green-color--);
+    opacity: 0.5;
+}
+
+.quantityContainer {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    vertical-align: middle;
+    text-align: left;
+    /* margin-right: 10px; */
+    font-size: 0.8rem;
+}
+
+.totalContainer {
+    display: flex;
+    justify-content: space-between;
+    min-height: 40px;
+    border: 1px dashed grey;
+    border-radius: 5px;
+    padding: 10px 5px;
+    margin-top: 20px;
+}
+
+.totalContainer h4 {
+    color: var(--green-color--);
+    align-items: center;
+    font-size: larger;
+    vertical-align: middle;
+}
+
+.totalContainer h5 {
+    font-size: larger;
+}

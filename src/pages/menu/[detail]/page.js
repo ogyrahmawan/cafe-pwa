@@ -56,9 +56,6 @@ export default function MenuDetail () {
                 const image = variant[indexVariant].image_url
                 setImage(image)
             }
-            // const variantClone = [...variant]
-            // variantClone[indexVariant].options = editedCart.options
-            // setVariant(variantClone)
         }
     }, [editedCart])
 
@@ -81,7 +78,6 @@ export default function MenuDetail () {
         }
     }
     
-
     function getOptions () {
         const options = variant[selectedVariant.index].options
         return <>

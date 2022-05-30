@@ -21,19 +21,14 @@ export default function MainLayout ({children}) {
                     showLabels
                     >
                         <BottomNavigationAction 
-                            onClick={() => router.push('/vouchers')} 
-                            label="Vouchers" 
-                            icon={<HomeMaxRounded />} 
-                        />
-                        <BottomNavigationAction 
-                            label="Menus" 
+                            label="Menu" 
                             icon={<MenuBookRounded  />}
                             onClick={() => router.push('/')} 
                         />
                         <BottomNavigationAction 
                             label="History" 
                             icon={<AccessTimeFilledRounded  />}
-                            onClick={() => router.push('/')} 
+                            onClick={() => router.push('/history')} 
                         />
                     </BottomNavigation>
                 </Paper>
